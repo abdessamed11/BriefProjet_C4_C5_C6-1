@@ -2,7 +2,7 @@
 
 include("connect.php");
 session_start();
-if (!isset($_SESSION ['name']))
+if (!isset($_SESSION['cin']))
     header ('location:login.php');   
 $id_employe = $_SESSION['id_employe'];
 $nom = $_SESSION['nom'];
@@ -23,9 +23,11 @@ if(isset($_GET['delete_dc'])){
   global $con;
   $sql = "DELETE FROM `demande_conge` WHERE id = $id";
   $res = mysqli_query($con,$sql);
+  header('location: resultat.php');
+
 }
 if (isset($_POST['déconnecté'])){
-  unset($_SESSION ['name']);
+  unset($_SESSION['cin']);
   header('location: login.php');
 }
 

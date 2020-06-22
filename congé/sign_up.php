@@ -57,7 +57,7 @@ if(isset($_POST['next'])){
 					<h1>Registration</h1>
 					<p>Fill up the form with correct values.</p>
 					<hr class="mb-3">
-					<label for="login"><b>matricul</b></label>
+					<label for="login"><b>CIN</b></label>
 					<input class="form-control" id="firstname" type="text" name="login" required>
 
 					<label for="password"><b>Password</b></label>

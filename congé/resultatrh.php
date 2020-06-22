@@ -2,15 +2,13 @@
 
 include("connect.php");
 session_start();
-if (!isset($_SESSION ['name']))
+if (!isset($_SESSION['cin']))
     header ('location:login.php');    
 
 
 
 //Remplir La liste
 $query_type = "SELECT * FROM demande_conge ";
-
-
 $result = mysqli_query($con,$query_type);
 
 if(isset($_GET['accept_user'])){
@@ -23,15 +21,15 @@ if(isset($_GET['accept_user'])){
     else
     echo ('erreur');
 }
-if(isset($_GET['delete_user'])){
-  $id = $_GET['delete_user'];
-  global $con;
+// if(isset($_GET['delete_user'])){
+//   $id = $_GET['delete_user'];
+//   global $con;
   
-  $sql = "DELETE FROM `demande_conge` WHERE id = $id";
-  $res = mysqli_query($con,$sql);
-  header("location: resultatrh.php");
-  echo 'suprimer';
-}
+//   $sql = "DELETE FROM `demande_conge` WHERE id = $id";
+//   $res = mysqli_query($con,$sql);
+//   header("location: resultatrh.php");
+//   echo 'suprimer';
+// }
 if(isset($_GET['refuse_user'])){
     $id_selc = $_GET['refuse_user'];
     $query_acc = "UPDATE demande_conge SET decision = 'Refused' where id = $id_selc ";
@@ -45,9 +43,10 @@ if(isset($_GET['refuse_user'])){
 if(isset($_POST['precedent']))
     header("location: homeRH.php");
 
-if(isset($_POST['déconnecté'])){
-    
-}
+    if (isset($_POST['déconnecté'])){
+        unset($_SESSION['cin']);
+        header('location: login.php');
+      }
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -55,6 +54,7 @@ if(isset($_POST['déconnecté'])){
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="css/main.css">
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/css/bootstrap.min.css" integrity="sha384-9aIt2nRpC12Uk9gS9baDl411NQApFmC26EwAOH8WgZl5MYYxFfc+NcPb1dKGj7Sk" crossorigin="anonymous">
     <title>resultat</title>
 </head>
 <body>
@@ -84,8 +84,7 @@ if(isset($_POST['déconnecté'])){
         <td><?=$row['date_fin'];?></td>
         <td><?=$row['date_demande'];?></td>
 
-        <!-- <td><a href="resultatrh.php?delete_user=<?=$row['id'];?> ">Suprimer</a></td> -->
-        <td><a class="accept" href="resultatrh.php?accept_user=<?=$row['id'];?> ">Accepter</a> <a class="refus" href="resultatrh.php?refuse_user=<?=$row['id'];?> ">Refuser</a></td>
+        <td><a class="accept" href="resultatrh.php?accept_user=<?=$row['id'];?> ">Accepter</a> <a class="btn btn-danger padding_font" href="resultatrh.php?refuse_user=<?=$row['id'];?> ">Refuser</a></td>
         <td><?=$row['decision'];?></td>
       </tr>
     <?php endwhile; ?>

@@ -1,11 +1,11 @@
 <?php
 include("connect.php");
 session_start();
-if (!isset($_SESSION ['name'])){
+if (!isset($_SESSION['cin'])){
     header ('location:login.php');    
 }
 if (isset($_POST['déconnecté'])){
-  unset($_SESSION ['name']);
+  unset($_SESSION['cin']);
   header ('location:login.php');
 }
 if(isset($_POST['submit'])){

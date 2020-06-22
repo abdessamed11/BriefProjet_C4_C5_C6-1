@@ -4,11 +4,11 @@ session_start();
 if(isset($_POST['submit'])){
 
     //Récupérer POST ::
-    $name=htmlspecialchars(strtolower(trim($_POST['cin'])));
+    $cin=htmlspecialchars(strtolower(trim($_POST['cin'])));
     $password=md5($_POST['password']);
 
     //Réquête
-    $query = "SELECT id FROM auth WHERE login='$name' && pwd='$password'";
+    $query = "SELECT id FROM auth WHERE login='$cin' && pwd='$password'";
     $result = mysqli_query($con,$query);
     
     if(mysqli_num_rows($result)>0){
@@ -19,17 +19,17 @@ if(isset($_POST['submit'])){
 
         //Récupérer ID Employe
         $id_employe = mysqli_fetch_assoc($result_id);
-        var_dump($id_employe);
     
         //Enregistre Name & ID_Employe dans la session
 
-        $_SESSION['name']=$name;
+        $_SESSION['cin']=$cin;
         $_SESSION['id_employe']=$id_employe['id'];
         $_SESSION['nom']=$id_employe['nom'];
         $_SESSION['prenom']=$id_employe['prenom'];
+
+        // to filter the HR department
         if($id_employe['id_service']==2)
-            header("location:homeRH.php");
-            
+            header("location:homeRH.php");   
         else
         header("Location:home.php");
         
@@ -67,8 +67,10 @@ if(isset($_POST['submit'])){
            		   		<i class="fas fa-user"></i>
            		   </div>
            		   <div class="div">
-           		   		<h5>CIN</h5>
-           		   		<input type="text" class="input" name="cin" require>
+
+
+
+           		   		<input type="text" placeholder="cin" class="input" name="cin" require>
            		   </div>
            		</div>
            		<div class="input-div pass">
@@ -76,14 +78,16 @@ if(isset($_POST['submit'])){
            		    	<i class="fas fa-lock"></i>
            		   </div>
            		   <div class="div">
-           		    	<h5>Password</h5>
-           		    	<input type="password" class="input" name="password"require>
+           		    	<!-- <h5>Password</h5> -->
+           		    	<input type="password" placeholder="password" class="input" name="password" require>
             	   </div>
             	</div>
                 <a href="#">Forgot Password?</a>
-                <button class="btn" type=submit name="submit">LoginIn</button>
+                <button class="btn"  type=submit name="submit">LoginIn</button>
             	
             </form>
+
+
         </div>
     </div>
     <script type="text/javascript" src="js/main.js"></script>

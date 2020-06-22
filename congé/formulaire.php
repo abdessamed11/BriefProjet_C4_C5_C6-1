@@ -2,7 +2,7 @@
 //test
 include("connect.php");
 session_start();
-if (!isset($_SESSION ['name']))
+if (!isset($_SESSION['cin']))
     header ('location:login.php');   
 //Remplir La liste
 $query_type = "SELECT * FROM type_conge";
